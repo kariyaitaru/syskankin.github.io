@@ -21,8 +21,20 @@
 <body class="fullscreen">
     <div class="container">
         <h1 class="title">Helloaa World!</h1>
+        <canvas id="canvassample" width="500" height="300"></canvas>
+        <div style="padding:10px">
+            <button type="button" onclick="clearCanvas()">リセット</button>
+            <button type="button" onclick="prevCanvas()">戻る</button>
+            <button type="button" onclick="nextCanvas()">進む</button>
+        </div>
+        <div style="padding:10px">
+            <button type="button" onclick="chgImg()" value="1">画像変換</button>
+        </div>
+        <h2>画像出力<h2>
+                <div id="img-box"><img id="newImg"></div>
     </div>
     <script src="./js/main.js"></script>
+    <script src="./js/canvas.js"></script>
 </body>
 
 </html>
