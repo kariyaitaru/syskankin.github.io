@@ -5,7 +5,7 @@ var canvas = document.getElementById('canvassample'),
     Ypoint;
 
 //初期値（サイズ、色、アルファ値）の決定
-var defSize = 7,
+var defSize = 2,
     defColor = "#555";
 
 
