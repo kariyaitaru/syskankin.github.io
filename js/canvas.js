@@ -8,11 +8,6 @@ var canvas = document.getElementById('canvassample'),
 var defSize = 2,
     defColor = "#555";
 
-
-// ストレージの初期化
-var myStorage = localStorage;
-window.onload = initLocalStorage();
-
 // PC対応
 canvas.addEventListener('mousedown', startPoint, false);
 canvas.addEventListener('mousemove', movePoint, false);
@@ -61,7 +56,6 @@ function endPoint(e)
 
     }
     moveflg = 0;
-  setLocalStoreage();
 }
 
 function clearCanvas(){
@@ -84,56 +78,6 @@ function chgImg()
   document.getElementById("newImg").src = png;
 }
 
-function initLocalStorage(){
-    myStorage.setItem("__log", JSON.stringify([]));
-}
-function setLocalStoreage(){
-    var png = canvas.toDataURL();
-    var logs = JSON.parse(myStorage.getItem("__log"));
-
-    setTimeout(function(){
-        logs.unshift({0:png});
-
-        myStorage.setItem("__log", JSON.stringify(logs));
-
-        currentCanvas = 0;
-        temp = [];
-    }, 0);
-}
-
-function prevCanvas(){
-    var logs = JSON.parse(myStorage.getItem("__log"));
-
-    if(logs.length > 0)
-    {
-        temp.unshift(logs.shift());
-
-        setTimeout(function(){
-            myStorage.setItem("__log", JSON.stringify(logs));
-            resetCanvas();
-
-            draw(logs[0]['png']);
-
-        }, 0);
-    }
-}
-
-function nextCanvas(){
-    var logs = JSON.parse(myStorage.getItem("__log"));
-
-    if(temp.length > 0)
-    {
-        logs.unshift(temp.shift());
-
-        setTimeout(function(){
-            myStorage.setItem("__log", JSON.stringify(logs));
-            resetCanvas();
-
-            draw(logs[0]['png']);
-
-        }, 0);
-    }
-}
 
 function draw(src) {
     var img = new Image();

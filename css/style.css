@@ -1,27 +1,28 @@
-body {
-    font-family: sans-serif;
-  }
+.dlg_container {
+  background: rgba(200, 200, 200, 0.8);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100vh;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+}
 
-  /* コンテンツがブラウザのウインドウを100%使うようにしましょう */
-  html,
-  .fullscreen {
-    display: flex;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-  }
+.canvas_container {
+  margin: auto;
+  width: 360px;
+}
 
-  /* コンテンツは画面の中央に来るようにね*/
-  .container {
-    margin: auto;
-    text-align: center;
-  }
+.canvas_container .row {
+  margin-left: 0;
+  margin-right: 0;
+}
 
-  .title {
-    font-size: 3rem;
-  }
-
-  canvas {
-    border:3px solid #000;
-  }
+.denpyo {
+  margin: 0.25rem;
+  width: 18rem;
+}

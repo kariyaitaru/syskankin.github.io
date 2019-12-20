@@ -2,38 +2,93 @@
 <html lang="jp">
 
 <head>
-    <meta charset="utf-8">
-    <title>Hello World</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="./manifest.json">
-    <meta name="theme-color" content="white" />
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="images/hello-icon-152.png">
-    <meta name="theme-color" content="white" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Hello World">
-    <meta name="msapplication-TileImage" content="images/hello-icon-144.png">
-    <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta charset="utf-8">
+  <title>Hello World</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Language" content="ja">
+  <meta http-equiv="X-UA-Compatible" content="IE=11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="white" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Hello World">
+  <meta name="msapplication-TileImage" content="images/hello-icon-144.png">
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="images/hello-icon-152.png">
+  <link rel="stylesheet" href="./lib/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/style.css?ver=13">
 </head>
 
-<body class="fullscreen">
+<body>
+  <nav class="navbar navbar-default">
     <div class="container">
-        <canvas id="canvassample" width="200" height="500"></canvas>
-        <div style="padding:10px">
-            <button type="button" onclick="clearCanvas()">リセット</button>
-            <button type="button" onclick="prevCanvas()">戻る</button>
-            <button type="button" onclick="nextCanvas()">進む</button>
-        </div>
-        <div style="padding:10px">
-            <button type="button" onclick="chgImg()" value="1">画像変換</button>
-        </div>
-        <h2>画像出力<h2>
-                <div id="img-box"><img id="newImg"></div>
+      <div class="navbar-header">
+        <h1 class="navbar-brand">電子サイン</h1>
+        <button class="btn btn-danger" id="btnClearCache">キャッシュの更新</button>
+        <button class="btn btn-danger" id="btnDeleteStrage">一括削除</button>
+        <button class="btn btn-primary" id="btnClearCache">伝票データ取得</button>
+        <button class="btn btn-primary" id="btnUpload">電子サインのアップロード</button>
+      </div>
     </div>
-    <script src="./js/main.js"></script>
-    <script src="./js/canvas.js"></script>
-</body>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="card denpyo">
+        <div class="card-body">
+          <h3 class="card-title">00-0001</h3>
+          <p class="card-text">かりや</p>
+          <button class="btn btn-primary js-signshow" data-key="sign_1">サインを表示</button>
+        </div>
+      </div>
+      <div class="card denpyo">
+        <div class="card-body">
+          <h3 class="card-title">00-0002</h3>
+          <p class="card-text">たいなか</p>
+          <button class="btn btn-primary js-signshow" data-key="sign_2">サインを表示</button>
+        </div>
+      </div>
+      <div class="card denpyo">
+        <div class="card-body">
+          <h3 class="card-title">00-0003</h3>
+          <p class="card-text">金城</p>
+          <button class="btn btn-primary js-signshow" data-key="sign_3">サインを表示</button>
+        </div>
+      </div>
+      <div class="card denpyo">
+        <div class="card-body">
+          <h3 class="card-title">00-0004</h3>
+          <p class="card-text">渡部</p>
+          <button class="btn btn-primary js-signshow" data-key="sign_4">サインを表示</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="dlg_container d-none row">
+    <div class="canvas_container">
+      <div class="row">
+        <canvas id="canvassample" class="card my-2" width="300" height="300"></canvas>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button class="btn btn-primary" id="btnSaveImage">保存する</button>
+          <button class="btn btn-secondary" id="btnDlgReset">リセット</button>
+          <button class="btn btn-secondary" id="btnDlgClose">閉じる</button>
+        </div>
+      </div>
+      <div id="img-box">
+        <img id="newImg">
+      </div>
+    </div>
+  </div>
+  <script src="./lib/jquery-3.4.1.slim.min.js"></script>
+  <script src="./lib/popper.min.js"></script>
+  <script src="./lib/bootstrap.min.js"></script>
+  <script src="./js/main.js?ver=asdasdf"></script>
+  <script src="./js/canvas.js?ver=2345"></script>
+</body>
 </html>
