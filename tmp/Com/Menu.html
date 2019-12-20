@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--HEAD_TAG_AREA-->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Language" content="ja">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+  <title>RuuP</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../../images/00_logo.ico">
+  <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png" sizes="180x180">
+  <script src="../../scripts/lib/jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../../styles/import.css?ver=<!--APP_VERSION-->">
+  <!--HEAD_TAG_AREA-->
+  <link rel="stylesheet" type="text/css" href="../../../styles/pages/Com/Menu.css?ver=<!--APP_VERSION-->">
+</head>
+<body>
+  <!--APP_HEADER_AREA-->
+  <div class="g_header">
+    <div class="g_header_container">
+      <div class="g_logo_container">
+        <a href="/kaniruup/ruup/index.php"><img src="../../images/00_logo.png" class="g_logo"></a>
+      </div>
+      <div class="g_title_container">
+        <a href="/kaniruup/ruup/index.php"><img src="../../images/00_ruup_title.png" class="g_title"></a>
+      </div>
+      <div class="g_btn_container">
+        <button class="btn" id="btnMenu" name="btnMenu">メニュー</button>
+        <button class="btn" id="btnBack" name="btnBack">戻る</button>
+      </div>
+    </div>
+  </div>
+  <!--APP_HEADER_AREA-->
+  <div class="wrapper">
+    <!--USER_KENGEN-->
+    <div class="itm_container" style="padding-left: 1rem; margin-top: 0.5rem;">
+      <label class="lbl">処理対象年度</label>
+      <select class="w_4rem is_num" id="lstFiscalYear" name="lstFiscalYear">
+        <!--LST_FISCAL_YEAR_AREA-->
+        <option value="2018">2018</option>
+        <option value="2019">2019</option>
+        <!--LST_FISCAL_YEAR_AREA-->
+      </select>年度
+    </div>
+    <!--USER_KENGEN-->
+    <div class="menu_wrap">
+      <div class="menu_section flex_1">
+        <h1 class="menu_title">機器見積</h1>
+        <div class="menu_contents l_flex_wrap">
+          <div>
+            <a href="../Kiki/KikiLst.php" class="btn_menu">機器見積一覧</a>
+            <a href="../Kiki/PrismImp.php" class="btn_menu">PrismCSV取り込み</a>
+          </div>
+        </div>
+      </div>
+      <div class="menu_section flex_2">
+        <h1 class="menu_title">工事単価</h1>
+        <div class="menu_contents l_flex_wrap">
+          <div>
+            <a href="../Koji/KojiLst.php" class="btn_menu">工事単価一覧</a>
+            <a href="../Koji/KojiLinkLst.php" class="btn_menu">関連工事マスタ</a>
+          </div>
+          <div>
+            <a href="../Koji/KojiImp.php" class="btn_menu">工事単価表ファイル取り込み</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu_wrap">
+      <div class="menu_section flex_1">
+        <h1 class="menu_title">データ連携</h1>
+        <div class="menu_contents l_flex_wrap">
+          <div>
+            <a href="../Koji/CsvOut.php" class="btn_menu">URシステム用CSVファイル出力</a>
+          </div>
+        </div>
+      </div>
+      <div class="menu_section flex_2">
+        <h1 class="menu_title">マスタ</h1>
+        <div class="menu_contents l_flex_wrap">
+          <div>
+            <a href="../Mst/MstSagyoState.php" class="btn_menu">作業状態管理マスタ</a>
+            <a href="../Mst/MstSpTankaLst.php" class="btn_menu">特別単価マスタ</a>
+            <a href="../Mst/MstUserLst.php" class="btn_menu">ユーザーマスタ</a>
+          </div>
+          <div>
+            <a href="../Mst/MstBugakariLst.php" class="btn_menu">歩掛マスタ</a>
+            <a href="../Mst/MstRomu.php" class="btn_menu">労務単価マスタ</a>
+            <a href="../Mst/MstKeisu.php" class="btn_menu">係数マスタ</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--APP_FOOTER_AREA-->
+  <!--APP_FOOTER_AREA-->
+  <script src="../../../scripts/pages/Com/Menu.js?=<!--APP_VERSION-->"></script>
+</body>
+</html>

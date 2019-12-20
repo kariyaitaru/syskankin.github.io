@@ -1,6 +1,6 @@
 {
-    "name": "Hello World",
-    "short_name": "Hello",
+    "name": "SYSCON e-sign",
+    "short_name": "esign",
     "icons": [{
       "src": "./images/hello-icon-128.png",
         "sizes": "128x128",
@@ -27,7 +27,7 @@
         "type": "image/png"
       }],
     "lang": "ja-jp",
-    "start_url": "./index.html",
+    "start_url": "./syskankin.github.io/index.php",
     "display": "standalone",
     "background_color": "white",
     "theme_color": "white"

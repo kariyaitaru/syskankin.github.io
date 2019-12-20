@@ -1,3 +1,7 @@
+.headbutton_container .btn {
+  margin: 0.25rem;
+}
+
 .dlg_container {
   background: rgba(200, 200, 200, 0.8);
   display: -webkit-box;

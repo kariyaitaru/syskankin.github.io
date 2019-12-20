@@ -1,9 +1,8 @@
 var cacheName = 'hello-pwa';
 var filesToCache = [
   './',
-  './index.html',
-  './css/style.css',
-  './js/main.js'
+  './syskankin.github.io/src/php/esign/Main.php',
+  './syskankin.github.io/scripts/canvas.js',
 ];
 
 /* サービスワーカー起動して、コンテンツをキャッシュする */

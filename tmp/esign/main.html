@@ -2,6 +2,7 @@
 <html lang="jp">
 
 <head>
+  <!--HEAD_TAG_AREA-->
   <meta charset="utf-8">
   <title>Hello World</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -20,52 +21,50 @@
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
   <link rel="apple-touch-icon" href="images/hello-icon-152.png">
   <link rel="stylesheet" href="./lib/bootstrap.min.css">
-  <link rel="stylesheet" href="./css/style.css?ver=13">
+  <!--HEAD_TAG_AREA-->
+  <link rel="stylesheet" href="../../../styles/style.css?ver=<!--APP_VERSION-->">
 </head>
 
 <body>
+  <!--APP_HEADER_AREA-->
   <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
         <h1 class="navbar-brand">電子サイン</h1>
-        <button class="btn btn-danger" id="btnClearCache">キャッシュの更新</button>
-        <button class="btn btn-danger" id="btnDeleteStrage">一括削除</button>
-        <button class="btn btn-primary" id="btnClearCache">伝票データ取得</button>
-        <button class="btn btn-primary" id="btnUpload">電子サインのアップロード</button>
       </div>
     </div>
   </nav>
+  <!--APP_HEADER_AREA-->
   <div class="container">
+    <!--FORM_HEADER_AREA-->
+    <form id="frm" name="frm" method="POST">
+      <!--FORM_HEADER_AREA-->
+      <div class="row headbutton_container">
+        <button type="button" class="btn btn-danger" id="btnClearCache">キャッシュの更新</button type="button">
+        <button type="button" class="btn btn-danger" id="btnDeleteStrage">一括削除</button type="button">
+        <button class="btn btn-primary" id="btnClearCache" name="btn" value="Search">伝票データ取得</button type="button">
+        <button class="btn btn-success" id="btnUpload" name="btn" value="Upload">電子サインのアップロード</button type="button">
+      </div>
+      <!--FORM_FOOTER_AREA-->
+    </form>
+    <!--FORM_FOOTER_AREA-->
+    <!--RESULT_AREA-->
     <div class="row">
+      <!--LIST_DATA_AREA-->
       <div class="card denpyo">
         <div class="card-body">
-          <h3 class="card-title">00-0001</h3>
-          <p class="card-text">かりや</p>
-          <button class="btn btn-primary js-signshow" data-key="sign_1">サインを表示</button>
+          <h3 class="card-title">
+            <!--USER_ID-->
+          </h3>
+          <p class="card-text">
+            <!--USER_NM-->
+          </p>
+          <button class="btn btn-primary js-signshow" data-key="sign_<!--USER_ID-->">サインを表示</button>
         </div>
       </div>
-      <div class="card denpyo">
-        <div class="card-body">
-          <h3 class="card-title">00-0002</h3>
-          <p class="card-text">たいなか</p>
-          <button class="btn btn-primary js-signshow" data-key="sign_2">サインを表示</button>
-        </div>
-      </div>
-      <div class="card denpyo">
-        <div class="card-body">
-          <h3 class="card-title">00-0003</h3>
-          <p class="card-text">金城</p>
-          <button class="btn btn-primary js-signshow" data-key="sign_3">サインを表示</button>
-        </div>
-      </div>
-      <div class="card denpyo">
-        <div class="card-body">
-          <h3 class="card-title">00-0004</h3>
-          <p class="card-text">渡部</p>
-          <button class="btn btn-primary js-signshow" data-key="sign_4">サインを表示</button>
-        </div>
-      </div>
+      <!--LIST_DATA_AREA-->
     </div>
+    <!--RESULT_AREA-->
   </div>
 
   <div class="dlg_container d-none row">
@@ -85,10 +84,12 @@
       </div>
     </div>
   </div>
-  <script src="./lib/jquery-3.4.1.slim.min.js"></script>
-  <script src="./lib/popper.min.js"></script>
-  <script src="./lib/bootstrap.min.js"></script>
-  <script src="./js/main.js?ver=asdasdf"></script>
-  <script src="./js/canvas.js?ver=2345"></script>
+  <!--APP_FOOTER_AREA-->
+  <script src="../../../lib/jquery-3.4.1.slim.min.js"></script>
+  <script src="../../../lib/popper.min.js"></script>
+  <script src="../../../lib/bootstrap.min.js"></script>
+  <!--APP_FOOTER_AREA-->
+  <script src="../../../scripts/main.js?=<!--APP_VERSION-->"></script>
+  <script src="../../../scripts/canvas.js?=<!--APP_VERSION-->"></script>
 </body>
 </html>
