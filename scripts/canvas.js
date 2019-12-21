@@ -21,8 +21,8 @@ function startPoint(e){
   e.preventDefault();
   ctx.beginPath();
 
-  Xpoint = e.layerX;
-  Ypoint = e.layerY;
+  Xpoint = e.layerX - window.pageXOffset;
+  Ypoint = e.layerY - window.pageYOffset;
 
   ctx.moveTo(Xpoint, Ypoint);
 }
@@ -30,8 +30,8 @@ function startPoint(e){
 function movePoint(e){
   if(e.buttons === 1 || e.witch === 1 || e.type == 'touchmove')
   {
-    Xpoint = e.layerX;
-    Ypoint = e.layerY;
+    Xpoint = e.layerX - window.pageXOffset;
+    Ypoint = e.layerY - window.pageYOffset;
     moveflg = 1;
 
     ctx.lineTo(Xpoint, Ypoint);
