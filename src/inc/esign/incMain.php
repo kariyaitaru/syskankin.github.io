@@ -179,16 +179,16 @@ function writeData($aryPost)
     $loginUser = $_SESSION[S_LOGIN_US_ID];
 
     // アップロードした画像を先に保存する
-    // foreach ($aryPost as $key => $value) {
-    //     if (false !== strpos($key, 'sign_')){
-    //         $userid = mb_substr($key, 5);
-    //         $strSign = str_replace('data:image/png;base64,', '', $value);
-    //         $strSign = str_replace(' ', '+', $strSign);
-    //         $sign = base64_decode($strSign);
-    //         $fileName = TEMPFIL_DIR . $userid . '.png';
-    //         file_put_contents($fileName, $sign);
-    //     }
-    // }
+    foreach ($aryPost as $key => $value) {
+        if (false !== strpos($key, 'sign_')){
+            $userid = mb_substr($key, 5);
+            $strSign = str_replace('data:image/png;base64,', '', $value);
+            $strSign = str_replace(' ', '+', $strSign);
+            $sign = base64_decode($strSign);
+            $fileName = TEMPFIL_DIR . $userid . '.png';
+            file_put_contents($fileName, $sign);
+        }
+    }
 
     // DB接続情報取得
     fncCom_GetDbInfo();
@@ -225,12 +225,8 @@ SQL;
             $sign = base64_decode($strSign);
             $fileName = $userid . '.png';
 
-            echo '<pre>';
-            var_dump('$fileName : ' . $fileName);
-            echo '</pre>';
-
             $sqlParams[] = array('SQL_PARAM_PARAM' => ':USER_ID', 'SQL_PARAM_VAL' => $userid, 'SQL_PARAM_TYPE' => SQLT_CHR);
-            $sqlParams[] = array('SQL_PARAM_PARAM' => ':SIGN_IMG', 'SQL_PARAM_VAL' => $sign, 'SQL_PARAM_TYPE' => SQLT_BLOB);
+            // $sqlParams[] = array('SQL_PARAM_PARAM' => ':SIGN_IMG', 'SQL_PARAM_VAL' => $sign, 'SQL_PARAM_TYPE' => SQLT_BLOB);
             $sqlParams[] = array('SQL_PARAM_PARAM' => ':SIGN_FILE_NM', 'SQL_PARAM_VAL' => $fileName, 'SQL_PARAM_TYPE' => SQLT_CHR);
             $sqlParams[] = array('SQL_PARAM_PARAM' => ':UPD_DT', 'SQL_PARAM_VAL' => $now, 'SQL_PARAM_TYPE' => SQLT_CHR);
             $sqlParams[] = array('SQL_PARAM_PARAM' => ':UPD_ID', 'SQL_PARAM_VAL' => $loginUser, 'SQL_PARAM_TYPE' => SQLT_CHR);

@@ -32,3 +32,22 @@
   margin: 0.25rem;
   width: 18rem;
 }
+
+#loading {
+  background-color: #fff;
+  display: table;
+  height: 100%;
+  left: 0;
+  opacity: 0.9;
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  .loadingMsg {
+    background: url("../images/loading.gif") center center no-repeat;
+    display: table-cell;
+    padding-top: 140px;
+    text-align: center;
+    vertical-align: middle;
+  }
+}

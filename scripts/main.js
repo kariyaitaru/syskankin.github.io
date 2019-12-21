@@ -18,6 +18,26 @@ window.onload = () => {
 }
 
 /**
+ * Base64形式の文字列をBLOBに変換する
+ */
+function toBlob(base64) {
+  var bin = atob(base64.replace(/^.*,/, ''));
+  var buffer = new Uint8Array(bin.length);
+  for (var i = 0; i < bin.length; i++) {
+    buffer[i] = bin.charCodeAt(i);
+  }
+  // Blobを作成
+  try {
+    var blob = new Blob([buffer.buffer], {
+      type: 'image/png'
+    });
+  } catch (e) {
+    return false;
+  }
+  return blob;
+}
+
+/**
  * Loading イメージを表示する
  * @param {String} msg 画面に表示する文言
  */
@@ -68,15 +88,8 @@ function addEvents() {
   // ローカルストレージの画像データを削除する
   $('#btnDeleteStrage').on('click', function () {
     if (confirm('以下の伝票の電子サインを削除します。よろしいですか？')) {
-      let keys = new Array();
-      for (i = 0; i < localStorage.length; i++) {
-        keys.push(localStorage.key(i));
-      }
-      keys.forEach(function( key ) {
-        if (key.match(/^sign_.*$/)) {
-          localStorage.removeItem(key);
-        }
-      });
+      DeleteAllSign();
+      ShowLayout();
     }
   });
 
@@ -84,22 +97,8 @@ function addEvents() {
   $('#btnUpload').on('click', function () {
     if (confirm('以下の伝票の電子サインをサーバーに登録します。よろしいですか？')) {
       dispLoading('処理中です');
-      //ローカルストレージのキーと画像バイナリデータを隠し項目に追加してフォームをサブミットする
-      let keys = new Array();
-      for (i = 0; i < localStorage.length; i++) {
-        keys.push(localStorage.key(i));
-      }
-      keys.forEach(function( key ) {
-        if (key.match(/^sign_.*$/)) {
-
-          let hidden = $('<input>', {
-            type: 'hidden',
-            name: key,
-            value: localStorage.getItem(key),
-          });
-          $('#frm').append($(hidden));
-        }
-      });
+      UploadSign();
+      DeleteAllSign();
       $('#frm').submit();
     }
   });
@@ -149,13 +148,46 @@ function addEvents() {
 
 }
 
+function DeleteAllSign() {
+  let keys = new Array();
+  for (i = 0; i < localStorage.length; i++) {
+    keys.push(localStorage.key(i));
+  }
+  keys.forEach(function (key) {
+    if (key.match(/^sign_.*$/)) {
+      localStorage.removeItem(key);
+    }
+  });
+}
+
+
+function UploadSign() {
+  //ローカルストレージのキーと画像バイナリデータを隠し項目に追加してフォームをサブミットする
+  let keys = new Array();
+  for (i = 0; i < localStorage.length; i++) {
+    keys.push(localStorage.key(i));
+  }
+  keys.forEach(function (key) {
+    if (key.match(/^sign_.*$/)) {
+      let imgbase = localStorage.getItem(key);
+      // let blob = toBlob(imgbase);
+      let hidden = $('<input>', {
+        type: 'hidden',
+        name: key,
+        value: imgbase,
+      });
+      $('#frm').append($(hidden));
+    }
+  });
+}
+
 function ShowLayout() {
 
   let keys = new Array();
   for (i = 0; i < localStorage.length; i++) {
     keys.push(localStorage.key(i));
   }
-  keys.forEach(function( key ) {
+  keys.forEach(function (key) {
     if (key.match(/^sign_.*$/)) {
       $('.js-signdel' + '[data-key="' + key + '"]').removeClass('d-none');
     }
