@@ -99,7 +99,7 @@ function addEvents() {
       dispLoading('処理中です');
       UploadSign();
       DeleteAllSign();
-      $('#frm').submit();
+      return true;
     }
   });
 
