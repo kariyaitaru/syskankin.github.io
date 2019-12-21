@@ -53,12 +53,12 @@ function setDataList($contents, $datalist, $curPageNo = 1, $countPerPage = 0)
 
 
 /**
- * M_USERのデータを取得する
+ * データを取得する
  *
  * @param array $aryPost Formの各項目のIDと値の連想配列
  * @return array 取得結果のレコードセット
  */
-function getDataMUser()
+function getData()
 {
 
     // ヒアドキュメント内定数展開用
@@ -156,39 +156,5 @@ function setSqlParams($aryPost)
     //     }
     // }
 
-    return $aryReturn;
-}
-
-
-/**
- * 初回表示時の値を連想配列にセットして返す
- *
- * @return array
- */
-function getEmptySetList()
-{
-    $aryReturn = array(
-        'TXT_USER_ID' => '',
-        'TXT_USER_NM' => '',
-        'LST_USER_KENGEN' => '',
-        'RANDOM_TOKEN' => fncCom_GenerateToken()
-    );
-    return $aryReturn;
-}
-
-/**
- * ポストされた値を連想配列にセットして返す
- *
- * @param array $aryPost 項目のIDと値をもつ連想配列
- * @return array
- */
-function getSetListByPost($aryPost)
-{
-    $aryReturn = array(
-        'TXT_USER_ID' => $aryPost['txtUserId'],
-        'TXT_USER_NM' => $aryPost['txtUserNm'],
-        'LST_USER_KENGEN' => $aryPost['lstUserKengen'],
-        'RANDOM_TOKEN' => fncCom_GenerateToken()
-    );
     return $aryReturn;
 }

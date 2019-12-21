@@ -23,7 +23,7 @@ window.onload = () => {
 $(function () {
 
   addEvents();
-
+  ShowLayout();
 });
 
 /**
@@ -41,14 +41,24 @@ function addEvents() {
   // ローカルストレージの画像データを削除する
   $('#btnDeleteStrage').on('click', function () {
     if (confirm('以下の伝票の電子サインを削除します。よろしいですか？')) {
-
+      let keys = new Array();
       for (i = 0; i < localStorage.length; i++) {
-        var key = localStorage.key(i)
-        if (key.match(/^sign_.*$/)) {
-          localStorage.removeItem(key)
-        }
+        keys.push(localStorage.key(i));
       }
+      keys.forEach(function( key ) {
+        if (key.match(/^sign_.*$/)) {
+          localStorage.removeItem(key);
+        }
+      });
     }
+  });
+
+  // 電子サインをアップロードする
+  $('#btnUpload').on('click', function () {
+    navigator.serviceWorker.getRegistration()
+      .then(registration => {
+        registration.unregister();
+      })
   });
 
   // サインを表示する
@@ -62,15 +72,25 @@ function addEvents() {
     LoadImage(key);
   });
 
+  // サインを削除する
+  $('.js-signdel').on('click', function () {
+    if (confirm('この伝票の電子サインを削除します。よろしいですか？')) {
+      let key = $(this).data('key');
+      localStorage.removeItem(key);
+      $(this).addClass('d-none');
+    }
+  });
+
   // サインを保存する
   $('#btnSaveImage').on('click', function () {
-    // chgImg();
     let key = $(this).data('key');
     let png = document.getElementById('canvassample').toDataURL('image/png');
 
     SaveImage(key, png);
     $(this).data('key', '');
     $('.dlg_container').addClass('d-none');
+    // 「サインを削除」ボタンを表示
+    $('.js-signdel' + '[data-key="' + key + '"]').removeClass('d-none');
   });
 
   // キャンバスをクリアする
@@ -86,6 +106,18 @@ function addEvents() {
 
 }
 
+function ShowLayout() {
+
+  let keys = new Array();
+  for (i = 0; i < localStorage.length; i++) {
+    keys.push(localStorage.key(i));
+  }
+  keys.forEach(function( key ) {
+    if (key.match(/^sign_.*$/)) {
+      $('.js-signdel' + '[data-key="' + key + '"]').removeClass('d-none');
+    }
+  });
+}
 
 function ClearCanvas() {
   let canvas = document.getElementById('canvassample');

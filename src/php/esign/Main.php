@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     switch ($_POST['btn']) {
         case 'Search':
             // データ取得
-            $datalist = getDataMUser();
+            $datalist = getData();
             break;
 
         case 'Upload':
@@ -51,14 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         default:
             break;
     }
-}
-
-
-//セッション情報がある場合、各入力項目に値をセットする
-if (isset($datalist)) {
-} else {
-    //初期化する
-    $arySetList = getEmptySetList();
 }
 
 // 検索結果を一覧表示する
