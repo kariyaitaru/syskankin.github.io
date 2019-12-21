@@ -44,8 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
 
         case 'Upload':
-            // データ取得
-            $datalist = getWriteData();
+            // データ登録
+            $postlist = filter_input_array(INPUT_POST, $_POST);
+            writeData($postlist);
             break;
 
         default:

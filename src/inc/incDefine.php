@@ -29,6 +29,7 @@ define('LIB_DIR', dirname(__FILE__).DS.'..'.DS.'lib'.DS);
 define('INC_DIR', dirname(__FILE__).DS);
 define('CLS_DIR', dirname(__FILE__).DS.'..'.DS.'class'.DS);
 define('HTM_DIR', dirname(__FILE__).DS.'..'.DS.'..'.DS.'tmp'.DS);
+define('TEMPFIL_DIR', dirname(__FILE__).DS.'..'.DS.'..'.DS.'tempfiles'.DS);
 
 // DB接続情報
 define('ORA_DIR', dirname(__FILE__).DS.'..'.DS.'..'.DS.'..'.DS.'oracle'.DS);

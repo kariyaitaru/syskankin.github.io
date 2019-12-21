@@ -158,3 +158,95 @@ function setSqlParams($aryPost)
 
     return $aryReturn;
 }
+
+
+/**
+ * DBへの登録処理
+ *
+ * @param array $aryPost
+ * @return boolean
+ */
+function writeData($aryPost)
+{
+    // ヒアドキュメント内定数展開用
+    $_ = function ($s) {
+        return $s;
+    };
+
+    $strAlertMsg = '';
+    $sqlParams = array();
+    $now = date("Y-m-d H:i:s");
+    $loginUser = $_SESSION[S_LOGIN_US_ID];
+
+    // アップロードした画像を先に保存する
+    // foreach ($aryPost as $key => $value) {
+    //     if (false !== strpos($key, 'sign_')){
+    //         $userid = mb_substr($key, 5);
+    //         $strSign = str_replace('data:image/png;base64,', '', $value);
+    //         $strSign = str_replace(' ', '+', $strSign);
+    //         $sign = base64_decode($strSign);
+    //         $fileName = TEMPFIL_DIR . $userid . '.png';
+    //         file_put_contents($fileName, $sign);
+    //     }
+    // }
+
+    // DB接続情報取得
+    fncCom_GetDbInfo();
+
+    $obj = new DataObject();
+    // DB接続
+    $obj->DBOpen();
+
+    if ($obj->GetErrFlg()) {
+        //ｴﾗｰ処理
+        fncCom_SetErr($obj->errMessage);
+        echo $_SESSION[S_ERR_MSG];
+        exit();
+    }
+
+
+    //更新
+    $sql = <<<SQL
+        Update {$_(DB_SCHEMA)}.{$_(DB_ID)}_M_ESIGN
+        Set
+        --    SIGN_IMG       = :SIGN_IMG ,
+            SIGN_FILE_NM   = :SIGN_FILE_NM
+            ,UPD_DT         = TO_TIMESTAMP(:UPD_DT)
+            ,UPD_ID         = :UPD_ID
+        Where
+            USER_ID = :USER_ID
+SQL;
+
+    foreach ($aryPost as $key => $value) {
+        if (false !== strpos($key, 'sign_')){
+            $userid = mb_substr($key, 5);
+            $strSign = str_replace('data:image/png;base64,', '', $value);
+            $strSign = str_replace(' ', '+', $strSign);
+            $sign = base64_decode($strSign);
+            $fileName = $userid . '.png';
+
+            echo '<pre>';
+            var_dump('$fileName : ' . $fileName);
+            echo '</pre>';
+
+            $sqlParams[] = array('SQL_PARAM_PARAM' => ':USER_ID', 'SQL_PARAM_VAL' => $userid, 'SQL_PARAM_TYPE' => SQLT_CHR);
+            $sqlParams[] = array('SQL_PARAM_PARAM' => ':SIGN_IMG', 'SQL_PARAM_VAL' => $sign, 'SQL_PARAM_TYPE' => SQLT_BLOB);
+            $sqlParams[] = array('SQL_PARAM_PARAM' => ':SIGN_FILE_NM', 'SQL_PARAM_VAL' => $fileName, 'SQL_PARAM_TYPE' => SQLT_CHR);
+            $sqlParams[] = array('SQL_PARAM_PARAM' => ':UPD_DT', 'SQL_PARAM_VAL' => $now, 'SQL_PARAM_TYPE' => SQLT_CHR);
+            $sqlParams[] = array('SQL_PARAM_PARAM' => ':UPD_ID', 'SQL_PARAM_VAL' => $loginUser, 'SQL_PARAM_TYPE' => SQLT_CHR);
+
+            $obj->ExecuteAuto($sql, $sqlParams);
+            if ($obj->GetErrFlg()) {
+                fncCom_SetErr($obj->errMessage);
+                echo $_SESSION[S_ERR_MSG];
+                exit();
+            }
+        }
+    }
+
+    //DB切断
+    $obj->DBClose();
+
+    return true;
+
+}

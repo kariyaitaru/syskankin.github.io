@@ -18,12 +18,39 @@ window.onload = () => {
 }
 
 /**
+ * Loading イメージを表示する
+ * @param {String} msg 画面に表示する文言
+ */
+function dispLoading(msg) {
+  // 引数なし（メッセージなし）を許容
+  if (msg == undefined) {
+    msg = "処理中です．．．";
+  }
+  // 画面表示メッセージ
+  var dispMsg = "<div class='loadingMsg'>" + msg + "</div>";
+  // ローディング画像が表示されていない場合のみ出力
+  if ($("#loading").length == 0) {
+    $("body").append("<div id='loading'>" + dispMsg + "</div>");
+  }
+}
+
+
+/**
+ * Loading イメージを削除する
+ */
+function removeLoading() {
+  $("#loading").remove();
+}
+
+/**
  * 全画面共通読み込み時処理
  */
 $(function () {
 
   addEvents();
   ShowLayout();
+
+  removeLoading();
 });
 
 /**
@@ -55,10 +82,26 @@ function addEvents() {
 
   // 電子サインをアップロードする
   $('#btnUpload').on('click', function () {
-    navigator.serviceWorker.getRegistration()
-      .then(registration => {
-        registration.unregister();
-      })
+    if (confirm('以下の伝票の電子サインをサーバーに登録します。よろしいですか？')) {
+      dispLoading('処理中です');
+      //ローカルストレージのキーと画像バイナリデータを隠し項目に追加してフォームをサブミットする
+      let keys = new Array();
+      for (i = 0; i < localStorage.length; i++) {
+        keys.push(localStorage.key(i));
+      }
+      keys.forEach(function( key ) {
+        if (key.match(/^sign_.*$/)) {
+
+          let hidden = $('<input>', {
+            type: 'hidden',
+            name: key,
+            value: localStorage.getItem(key),
+          });
+          $('#frm').append($(hidden));
+        }
+      });
+      $('#frm').submit();
+    }
   });
 
   // サインを表示する
