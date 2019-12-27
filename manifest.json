@@ -27,7 +27,7 @@
         "type": "image/png"
       }],
     "lang": "ja-jp",
-    "start_url": "./syskankin.github.io/index.php",
+    "start_url": "/syskankin.github.io/src/php/esign/Main.php",
     "display": "standalone",
     "background_color": "white",
     "theme_color": "white"
