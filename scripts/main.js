@@ -146,6 +146,43 @@ function addEvents() {
     ClearCanvas();
   });
 
+
+  $('#btnDownload').on('click', function() {
+    handleDownload("kariya.png");
+    handleDownload("kinjo.png");
+  });
+}
+
+/**
+ * ファイルのダウンロードを行う
+ * @param {string} name ファイル名
+ */
+function handleDownload(name) {
+  if (window.navigator.msSaveBlob) {
+    // IEの場合
+    $.ajax({
+      url: '../../../tempfiles/' + name, // ファイルパスを直接指定する
+      type: "GET",
+      dataType: 'binary',
+      responseType:'blob',
+      processData: false,
+    }).done(function (data, textStatus, jqXHR) {
+      console.log('正常　ファイル容量：' + data.size);
+      window.navigator.msSaveBlob(data, name);
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+      console.log('Ajaxエラー');
+    });
+    return;
+  } else {
+    // chrome,firefox
+    var a = document.createElement('a');
+    a.download = name;
+    a.href = "../../ajax/ajxDownloadFile.php?filename=" + name;
+
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 }
 
 function DeleteAllSign() {
