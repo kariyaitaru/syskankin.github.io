@@ -463,6 +463,70 @@ class DataObject
     }
 
     //==================================================
+    //機  能:SQL実行バイナリデータ更新版(INSERT/DELETE/UPDATE)
+    //引  数:ARG1 - SQL
+    //戻り値:True:正常 False:異常
+    //==================================================
+    function ExecuteBLOB($sql, $sqlParams = null, $strSign = null)
+    {
+        // LOB ロケータにリソースを割り当てる
+        $lob = oci_new_descriptor($this->conn, OCI_D_LOB);
+
+        // SQL実行
+        $this->stid = oci_parse($this->conn, $sql);
+        if (isset($sqlParams)) {
+            if (array_values($sqlParams) !== $sqlParams) {
+                $sqlParams = array($sqlParams);
+            }
+            foreach ($sqlParams as $sqlParam) {
+                if (!isset($sqlParam["SQL_PARAM_PARAM"])) {
+                    continue;
+                }
+                if (!isset($sqlParam["SQL_PARAM_VAL"])) {
+                    $sqlParam['SQL_PARAM_VAL'] = null;
+                }
+                if (!isset($sqlParam["SQL_PARAM_LEN"])) {
+                    // oci_bind_by_name関数の初期値をセット
+                    $sqlParam['SQL_PARAM_LEN'] = -1;
+                }
+                if (!isset($sqlParam["SQL_PARAM_TYPE"])) {
+                    // oci_bind_by_name関数の初期値をセット
+                    $sqlParam["SQL_PARAM_TYPE"] = SQLT_CHR;
+                }
+                // パラメータのバインド
+                oci_bind_by_name(
+                    $this->stid,
+                    $sqlParam["SQL_PARAM_PARAM"],
+                    $sqlParam["SQL_PARAM_VAL"],
+                    $sqlParam["SQL_PARAM_LEN"],
+                    $sqlParam["SQL_PARAM_TYPE"]
+                );
+            }
+        }
+        // BLOB用のバインド
+        oci_bind_by_name($this->stid, ':SIGN_IMG', $lob, -1, OCI_B_BLOB);
+        $result     = oci_execute($this->stid, OCI_DEFAULT);
+        if (!$result) {
+            // ｴﾗｰ処理
+            $this->errFlg = true;
+            $this->err["code"] = "";
+            $this->err["message"] = "SQLエラー：" . $sql;
+            $this->SetErr();
+            return false;
+        }
+
+        // バイナリデータをDBに書き込み
+        if ($lob->save($strSign)) {
+            oci_commit($this->conn);
+        }
+        else {
+            echo "Couldn't upload Blob\n";
+        }
+
+        return true;
+    }
+
+    //==================================================
     //機  能:ｺﾐｯﾄ処理
     //引  数:なし
     //戻り値:True:正常 False:異常

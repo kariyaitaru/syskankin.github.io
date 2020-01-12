@@ -45,9 +45,6 @@ function setDataList($contents, $datalist, $curPageNo = 1, $countPerPage = 0)
     }
     $contents = $aryResultHTML[0] . $strMasterList . $aryResultHTML[2];
 
-    // //ページングコンポーネントを生成
-    // $contents = funcCom_SetPagingContents($contents, $datalist, $curPageNo, $countPerPage);
-
     return $contents;
 }
 
@@ -123,17 +120,7 @@ function setWhere($aryPost)
 {
 
     $strWhere = ' Where 1 = 1';
-    $strWhere .= ' And SIGN_IMG Is Null';
 
-    // if (isset($aryPost)) {
-    //     //ユーザーID（部分一致）
-    //     if ($aryPost['txtUserId'] != '') {
-    //         $strWhere .= ' AND UPPER(MU.USER_ID) LIKE UPPER(:USER_ID) ';
-    //     }
-    // } else {
-    //     // 利用停止とｼｽﾃﾑ管理の権限は抽出対象外とする
-    //     $strWhere .= ' AND NOT MU.USER_KENGEN IN (0, 9) ';
-    // }
     return $strWhere;
 }
 
@@ -147,14 +134,6 @@ function setSqlParams($aryPost)
 {
     $aryReturn = array();
     $strUserVal = '';
-
-    // if (isset($aryPost)) {
-    //     //ユーザーID（部分一致）
-    //     if ($aryPost['txtUserId'] !== '') {
-    //         $strUserVal = '%' . $aryPost['txtUserId'] . '%';
-    //         $aryReturn[] = array('SQL_PARAM_PARAM' => ':USER_ID', 'SQL_PARAM_VAL' => $strUserVal, 'SQL_PARAM_LEN' => null, 'SQL_PARAM_TYPE' => SQLT_CHR);
-    //     }
-    // }
 
     return $aryReturn;
 }
@@ -204,34 +183,30 @@ function writeData($aryPost)
         exit();
     }
 
-
     //更新
     $sql = <<<SQL
         Update {$_(DB_SCHEMA)}.{$_(DB_ID)}_M_ESIGN
         Set
-        --    SIGN_IMG       = :SIGN_IMG ,
-            SIGN_FILE_NM   = :SIGN_FILE_NM
+            SIGN_IMG        = EMPTY_BLOB()
+            ,SIGN_FILE_NM   = :SIGN_FILE_NM
             ,UPD_DT         = TO_TIMESTAMP(:UPD_DT)
             ,UPD_ID         = :UPD_ID
         Where
             USER_ID = :USER_ID
+        RETURNING SIGN_IMG INTO :SIGN_IMG
 SQL;
 
     foreach ($aryPost as $key => $value) {
         if (false !== strpos($key, 'sign_')){
             $userid = mb_substr($key, 5);
-            $strSign = str_replace('data:image/png;base64,', '', $value);
-            $strSign = str_replace(' ', '+', $strSign);
-            $sign = base64_decode($strSign);
+            $sign = str_replace('"', '', $value);
             $fileName = $userid . '.png';
 
             $sqlParams[] = array('SQL_PARAM_PARAM' => ':USER_ID', 'SQL_PARAM_VAL' => $userid, 'SQL_PARAM_TYPE' => SQLT_CHR);
-            // $sqlParams[] = array('SQL_PARAM_PARAM' => ':SIGN_IMG', 'SQL_PARAM_VAL' => $sign, 'SQL_PARAM_TYPE' => SQLT_BLOB);
             $sqlParams[] = array('SQL_PARAM_PARAM' => ':SIGN_FILE_NM', 'SQL_PARAM_VAL' => $fileName, 'SQL_PARAM_TYPE' => SQLT_CHR);
             $sqlParams[] = array('SQL_PARAM_PARAM' => ':UPD_DT', 'SQL_PARAM_VAL' => $now, 'SQL_PARAM_TYPE' => SQLT_CHR);
             $sqlParams[] = array('SQL_PARAM_PARAM' => ':UPD_ID', 'SQL_PARAM_VAL' => $loginUser, 'SQL_PARAM_TYPE' => SQLT_CHR);
-
-            $obj->ExecuteAuto($sql, $sqlParams);
+            $obj->ExecuteBLOB($sql, $sqlParams, $sign);
             if ($obj->GetErrFlg()) {
                 fncCom_SetErr($obj->errMessage);
                 echo $_SESSION[S_ERR_MSG];
